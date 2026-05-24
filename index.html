@@ -15,10 +15,13 @@
     <!-- Global Header Bar (Controls) -->
     <div class="header-bar" id="game-header" style="display: none;">
       <button class="back-btn" id="btn-back" title="Go Back">◀</button>
-      <div class="user-status">
-        <div class="user-avatar" id="header-user-avatar">🦁</div>
-        <div id="header-user-name" style="font-weight: 700;">Leo</div>
-        <div class="star-count">⭐ <span id="header-star-count">0</span></div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <div class="user-status">
+          <div class="user-avatar" id="header-user-avatar">🦁</div>
+          <div id="header-user-name" style="font-weight: 700;">Leo</div>
+          <div class="star-count">⭐ <span id="header-star-count">0</span></div>
+        </div>
+        <button class="btn-cartoon btn-red" id="btn-logout" style="font-size: 0.9rem; padding: 6px 14px; height: 44px; box-shadow: 0 4px 0 var(--color-border); border-radius: 20px; font-weight: 700;" title="Switch Player">Switch 👤</button>
       </div>
     </div>
 

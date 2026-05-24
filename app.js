@@ -138,8 +138,8 @@ const DOM = {
   header: document.getElementById('game-header'),
   backBtn: document.getElementById('btn-back'),
   headerAvatar: document.getElementById('header-user-avatar'),
-  headerName: document.getElementById('header-user-name'),
   headerStars: document.getElementById('header-star-count'),
+  btnLogout: document.getElementById('btn-logout'),
   
   // Screens
   screens: {
@@ -253,6 +253,17 @@ function init() {
     document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
     option.classList.add('selected');
   });
+
+  // Auto-login to last active user
+  const activeUser = localStorage.getItem('kiddies_active_user');
+  if (activeUser) {
+    const profile = state.profiles.find(p => p.name.toLowerCase() === activeUser.toLowerCase());
+    if (profile) {
+      state.currentProfile = profile;
+      showScreen('map');
+      updateMapUI();
+    }
+  }
 }
 
 function showScreen(screenName) {
@@ -359,6 +370,13 @@ function setupEventListeners() {
     showScreen('map');
     updateMapUI();
   });
+
+  // Logout Switch Player click
+  DOM.btnLogout.addEventListener('pointerdown', () => {
+    localStorage.removeItem('kiddies_active_user');
+    state.currentProfile = null;
+    showScreen('login');
+  });
 }
 
 // ----------------------------------------------------
@@ -388,6 +406,7 @@ function loginOrCreateUser(name, avatar) {
     saveProfiles();
   }
   state.currentProfile = user;
+  localStorage.setItem('kiddies_active_user', user.name); // Set active session
   renderExistingUsers();
   showScreen('map');
   updateMapUI();
@@ -403,6 +422,7 @@ function renderExistingUsers() {
       pill.innerHTML = `<span>${p.avatar}</span> <span>${p.name}</span>`;
       pill.addEventListener('pointerdown', () => {
         state.currentProfile = p;
+        localStorage.setItem('kiddies_active_user', p.name); // Set active session
         showScreen('map');
         updateMapUI();
       });
