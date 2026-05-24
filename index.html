@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Keyboard Kiddies Lessons</title>
+  <meta name="description" content="A cartoonish interactive piano game for 5-year-olds featuring Leo the Lion and friends. Learn dynamics, pitch, rhythm, and basic melodies.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Game Wrapper optimized for Landscape Tablets -->
+  <div id="game-container">
+
+    <!-- Global Header Bar (Controls) -->
+    <div class="header-bar" id="game-header" style="display: none;">
+      <button class="back-btn" id="btn-back" title="Go Back">◀</button>
+      <div class="user-status">
+        <div class="user-avatar" id="header-user-avatar">🦁</div>
+        <div id="header-user-name" style="font-weight: 700;">Leo</div>
+        <div class="star-count">⭐ <span id="header-star-count">0</span></div>
+      </div>
+    </div>
+
+    <!-- 1. SCREEN: LOGIN / PROFILE SELECTION -->
+    <div class="screen active" id="screen-login">
+      <h1>🎹 Keyboard Kiddies!</h1>
+      <div class="login-card">
+        <h2>Who is playing today?</h2>
+        
+        <div class="avatar-selection" id="login-avatar-selection">
+          <div class="avatar-option selected" data-avatar="🦁">🦁</div>
+          <div class="avatar-option" data-avatar="🐵">🐵</div>
+          <div class="avatar-option" data-avatar="🦛">🦛</div>
+          <div class="avatar-option" data-avatar="🐼">🐼</div>
+          <div class="avatar-option" data-avatar="🦒">🦒</div>
+        </div>
+
+        <input type="text" class="name-input" id="input-username" placeholder="Type your name!" maxlength="10" autocomplete="off">
+        
+        <button class="btn-cartoon btn-yellow" id="btn-login-start">Let's Play! 🚀</button>
+
+        <div class="existing-users" id="existing-users-section" style="display: none;">
+          <p>Or choose your profile:</p>
+          <div class="user-list" id="users-pill-container">
+            <!-- User pills injected via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. SCREEN: SAFARI MAP (DASHBOARD) -->
+    <div class="screen" id="screen-map">
+      <h1>Music Safari Map</h1>
+      
+      <div class="leo-guide-container">
+        <div class="leo-character" id="leo-map-avatar">🦁</div>
+        <div class="leo-speech-bubble">
+          <p id="leo-map-text">Hi! Let's explore the musical jungle together! Pick a path node to begin!</p>
+        </div>
+      </div>
+
+      <!-- Scrollable Path -->
+      <div class="map-path">
+        <!-- Connecting winding road trail -->
+        <svg class="map-svg-path" viewBox="0 0 1700 320" preserveAspectRatio="none">
+          <path d="M 100,60 C 200,60 200,160 300,160 C 400,160 400,260 500,260 C 600,260 600,160 700,160 C 800,160 800,60 900,60 C 1000,60 1000,160 1100,160 C 1200,160 1200,260 1300,260 C 1400,260 1400,160 1500,160 C 1600,160 1600,60 1660,60" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="18" stroke-linecap="round"/>
+          <path d="M 100,60 C 200,60 200,160 300,160 C 400,160 400,260 500,260 C 600,260 600,160 700,160 C 800,160 800,60 900,60 C 1000,60 1000,160 1100,160 C 1200,160 1200,260 1300,260 C 1400,260 1400,160 1500,160 C 1600,160 1600,60 1660,60" fill="none" stroke="#795548" stroke-width="10" stroke-linecap="round" stroke-dasharray="16 16"/>
+        </svg>
+
+        <!-- Node 1: Dynamics (Leo) -->
+        <div class="map-node btn-orange" id="node-lesson-1" data-lesson="1">
+          <span class="map-node-icon">🦁</span>
+          <span class="map-node-label">Leo's Roars</span>
+          <div class="map-node-stars" id="node-stars-1">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 2: Pitch (Monkey) -->
+        <div class="map-node btn-pink" id="node-lesson-2" data-lesson="2">
+          <span class="map-node-icon">🐵</span>
+          <span class="map-node-label">Monkey Swing</span>
+          <div class="map-node-stars" id="node-stars-2">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 3: Rhythm (Hippo) -->
+        <div class="map-node btn-purple" id="node-lesson-3" data-lesson="3">
+          <span class="map-node-icon">🦛</span>
+          <span class="map-node-label">Hippo Beats</span>
+          <div class="map-node-stars" id="node-stars-3">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 4: Notes (Panda Piano) -->
+        <div class="map-node btn-green" id="node-lesson-4" data-lesson="4">
+          <span class="map-node-icon">🐼</span>
+          <span class="map-node-label">Singing Keys</span>
+          <div class="map-node-stars" id="node-stars-4">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 5: Melodies (Songs) -->
+        <div class="map-node btn-yellow" id="node-lesson-5" data-lesson="5">
+          <span class="map-node-icon">🎵</span>
+          <span class="map-node-label">Song Hero</span>
+          <div class="map-node-stars" id="node-stars-5">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 6: Tempo (Cheetah/Turtle) -->
+        <div class="map-node btn-red" id="node-lesson-6" data-lesson="6">
+          <span class="map-node-icon">🐆</span>
+          <span class="map-node-label">Cheetah Speed</span>
+          <div class="map-node-stars" id="node-stars-6">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 7: Simon says (Parrot) -->
+        <div class="map-node btn-pink" id="node-lesson-7" data-lesson="7">
+          <span class="map-node-icon">🦜</span>
+          <span class="map-node-label">Polly Echo</span>
+          <div class="map-node-stars" id="node-stars-7">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 8: Feelings (Happy/Sad Sun) -->
+        <div class="map-node btn-purple" id="node-lesson-8" data-lesson="8">
+          <span class="map-node-icon">☀️</span>
+          <span class="map-node-label">Music Mood</span>
+          <div class="map-node-stars" id="node-stars-8">
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+            <span class="empty">⭐</span>
+          </div>
+        </div>
+
+        <!-- Node 9: Sandbox / Free Play -->
+        <div class="map-node btn-sky" id="node-sandbox" data-lesson="9">
+          <span class="map-node-icon">🎹</span>
+          <span class="map-node-label">Free Play</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SCREEN: LESSON 1 - DYNAMICS GAME (Leo's Roars) -->
+    <div class="screen" id="screen-dynamics">
+      <div class="game-viewport">
+        <div class="game-card">
+          <h2>Dynamics: Loud or Soft?</h2>
+          <div class="dynamics-game">
+            <div class="lion-roar-stage" id="leo-roar-stage">
+              🦁
+              <div class="roar-ripple" id="roar-ripple-1"></div>
+              <div class="roar-ripple" id="roar-ripple-2" style="animation-delay: 0.2s;"></div>
+            </div>
+            
+            <p id="dynamics-prompt">Tap the Roar button to hear Leo, then guess if it's LOUD or SOFT!</p>
+            
+            <button class="btn-cartoon btn-orange" id="btn-roar-listen" style="font-size: 1.8rem; padding: 16px 36px;">🦁 ROAR! 🔊</button>
+            
+            <div class="dynamics-buttons" id="dynamics-choices-container" style="display: none;">
+              <div class="choice-card" id="choice-soft" data-choice="soft">
+                <span class="icon">🤫</span>
+                <span class="label">Quiet (Soft)</span>
+              </div>
+              <div class="choice-card" id="choice-loud" data-choice="loud">
+                <span class="icon">📢</span>
+                <span class="label">Loud!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SCREEN: LESSON 2 - PITCH GAME (Monkey Tree Jump) -->
+    <div class="screen" id="screen-pitch">
+      <div class="game-viewport">
+        <div class="game-card">
+          <h2>Pitch: High or Low Note?</h2>
+          
+          <div class="pitch-game">
+            <!-- Left Scene Area -->
+            <div class="jungle-scene">
+              <div class="branch branch-high">High Branch 🌴</div>
+              <div class="monkey-character" id="monkey-pitch-sprite">🐵</div>
+              <div class="branch branch-low">Low Grass 🌱</div>
+            </div>
+
+            <!-- Right Controls Area -->
+            <div class="pitch-buttons">
+              <div class="sound-replay-btn" id="btn-pitch-replay" title="Replay Sound">🔔</div>
+              <p style="font-size: 1.1rem; max-width: 150px; text-align: center;">Listen to the sound!</p>
+              
+              <button class="btn-cartoon btn-pink" id="btn-pitch-high" data-choice="high">High Up 🌤️</button>
+              <button class="btn-cartoon btn-green" id="btn-pitch-low" data-choice="low">Down Low 🪵</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. SCREEN: LESSON 3 - RHYTHM GAME (Hippo Heavy Beats) -->
+    <div class="screen" id="screen-rhythm">
+      <div class="game-viewport">
+        <div class="game-card">
+          <h2>Rhythm: Keep the Beat!</h2>
+          
+          <div class="rhythm-game">
+            <div class="hippo-stage" id="hippo-sprite">🦛</div>
+            
+            <div class="rhythm-instruction" id="rhythm-text">
+              Match the Hippo's beat! Tap when the circle lights up red!
+            </div>
+
+            <div class="rhythm-visualizer" id="rhythm-visualizer-bar">
+              <div class="visualizer-node"></div>
+              <div class="visualizer-node"></div>
+              <div class="visualizer-node"></div>
+              <div class="visualizer-node"></div>
+            </div>
+
+            <button class="drum-pad" id="btn-drum-pad">
+              <span>🥁</span>
+              TAP!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. SCREEN: LESSON 4 - KEYBOARD INTRO (Singing Keys) -->
+    <div class="screen" id="screen-notes">
+      <div class="game-viewport">
+        <div class="game-card" style="justify-content: space-between;">
+          <h2>Singing Keys</h2>
+          
+          <div class="piano-hint-box">
+            <div class="piano-instructor-avatar">🐼</div>
+            <div class="piano-instruction-text" id="notes-instruction-text">
+              Can you find Alligator 🐊 on the A key?
+            </div>
+          </div>
+
+          <!-- Virtual Keyboard Injection Area -->
+          <div class="keyboard" id="keyboard-notes">
+            <!-- JavaScript will inject interactive keys -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. SCREEN: LESSON 5 - MELODY MAKER (Song Hero) -->
+    <div class="screen" id="screen-melody">
+      <div class="game-viewport">
+        <div class="game-card" style="padding: 16px;">
+          <div class="sandbox-controls" style="margin-bottom: 5px;">
+            <h2 style="font-size: 1.8rem; margin: 0;">Song Hero Game</h2>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-cartoon btn-yellow" id="btn-select-song-1" style="font-size: 1.1rem; padding: 6px 14px;">Mary's Lamb 🐑</button>
+              <button class="btn-cartoon btn-orange" id="btn-select-song-2" style="font-size: 1.1rem; padding: 6px 14px;">Twinkle Star 🌟</button>
+            </div>
+          </div>
+
+          <!-- Scrolling note highway -->
+          <div class="melody-track-container" id="melody-highway">
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-lane"></div>
+            <div class="melody-target-bar"></div>
+          </div>
+
+          <!-- Bottom keyboard to tap keys -->
+          <div class="keyboard" id="keyboard-melody" style="height: 180px;">
+            <!-- Piano Keys Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. SCREEN: LESSON 6 - TEMPO (Cheetah & Turtle) -->
+    <div class="screen" id="screen-tempo">
+      <div class="game-viewport">
+        <div class="game-card">
+          <h2>Tempo: Fast or Slow?</h2>
+          <div class="dynamics-game" style="width: 100%;">
+            <div class="lion-roar-stage" id="tempo-stage" style="font-size: 6rem; gap: 40px; display: flex; align-items: center; justify-content: center; height: 150px;">
+              <span id="tempo-cheetah" style="transition: transform 0.2s;">🐆</span>
+              <span id="tempo-turtle" style="transition: transform 0.2s;">🐢</span>
+            </div>
+            
+            <p id="tempo-prompt" style="text-align: center;">Tap Listen to hear the drum beat, then guess if it's FAST or SLOW!</p>
+            
+            <button class="btn-cartoon btn-orange" id="btn-tempo-listen" style="font-size: 1.8rem; padding: 16px 36px; margin: 0 auto; display: block;">🥁 LISTEN! 🔊</button>
+            
+            <div class="dynamics-buttons" id="tempo-choices-container" style="display: none; justify-content: center; gap: 30px; margin-top: 20px;">
+              <div class="choice-card" id="choice-tempo-slow" data-choice="slow">
+                <span class="icon">🐢</span>
+                <span class="label">Slow Beat</span>
+              </div>
+              <div class="choice-card" id="choice-tempo-fast" data-choice="fast">
+                <span class="icon">🐆</span>
+                <span class="label">Fast!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. SCREEN: LESSON 7 - COPY CAT (Parrot Ear Training) -->
+    <div class="screen" id="screen-copycat">
+      <div class="game-viewport">
+        <div class="game-card" style="justify-content: space-between;">
+          <h2>Polly's Copy Cat</h2>
+          
+          <div class="piano-hint-box">
+            <div class="piano-instructor-avatar">🦜</div>
+            <div class="piano-instruction-text" id="copycat-instruction-text">
+              Listen to Polly sing, then play the same notes!
+            </div>
+          </div>
+
+          <!-- Mini 5-key keyboard for copy cat (C, D, E, F, G) -->
+          <div class="keyboard" id="keyboard-copycat" style="max-width: 650px; height: 220px;">
+            <!-- JS Inject -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. SCREEN: LESSON 8 - MUSIC FEELINGS (Major vs Minor Chords) -->
+    <div class="screen" id="screen-feelings">
+      <div class="game-viewport">
+        <div class="game-card">
+          <h2>Music Feelings: Happy or Sad?</h2>
+          <div class="dynamics-game" style="width: 100%;">
+            <div class="lion-roar-stage" id="feelings-stage" style="font-size: 7rem; height: 150px; display: flex; align-items: center; justify-content: center;">
+              🎭
+            </div>
+            
+            <p id="feelings-prompt" style="text-align: center;">Listen to the chord, does it sound HAPPY or SAD?</p>
+            
+            <button class="btn-cartoon btn-purple" id="btn-feelings-listen" style="font-size: 1.8rem; padding: 16px 36px; margin: 0 auto; display: block;">🎹 Play Chord 🔊</button>
+            
+            <div class="dynamics-buttons" id="feelings-choices-container" style="display: none; justify-content: center; gap: 30px; margin-top: 20px;">
+              <div class="choice-card" id="choice-feelings-happy" data-choice="happy">
+                <span class="icon">☀️</span>
+                <span class="label">Happy (Major)</span>
+              </div>
+              <div class="choice-card" id="choice-feelings-sad" data-choice="sad">
+                <span class="icon">🌧️</span>
+                <span class="label">Sad (Minor)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. SCREEN: SANDBOX (Free Play) -->
+    <div class="screen" id="screen-sandbox">
+      <div class="game-viewport">
+        <div class="game-card">
+          <div class="sandbox-controls">
+            <h2>Musical Sandbox 🌈</h2>
+            
+            <div class="sandbox-record-group">
+              <span class="record-dot" id="sandbox-record-indicator"></span>
+              <button class="btn-cartoon btn-red" id="btn-record-toggle" style="font-size: 1.1rem; padding: 8px 16px;">Record 🎙️</button>
+              <button class="btn-cartoon btn-green" id="btn-record-play" style="font-size: 1.1rem; padding: 8px 16px; display: none;">Play My Song 🎧</button>
+            </div>
+          </div>
+
+          <!-- Full sandbox keyboard -->
+          <div class="keyboard" id="keyboard-sandbox" style="height: 280px;">
+            <!-- JS Inject -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP OVERLAY: CONGRATS & STAR REWARD -->
+    <div class="popup-overlay" id="popup-congrats">
+      <div class="congrats-card">
+        <div class="congrats-character" id="popup-avatar">🦁</div>
+        <h2 id="popup-title" style="color: var(--color-orange);">Amazing Job!</h2>
+        <p id="popup-text">You earned stars!</p>
+        
+        <div class="congrats-stars" id="popup-stars-container">
+          <span>⭐</span>
+          <span>⭐</span>
+          <span>⭐</span>
+        </div>
+
+        <button class="btn-cartoon btn-yellow" id="popup-btn-action" style="margin-top: 20px;">Next Level! 🎉</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
